@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Livro from "./pages/Livro";
+import Livro from "./pages/Livro/Livro";
 import ListaLivro from "./pages/ListaLivro/ListaLivro";
 
 function Routes() {
