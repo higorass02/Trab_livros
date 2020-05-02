@@ -43,21 +43,32 @@ function ListaLivro() {
             <Ul>
                 {books.map((book) => (
                     <li key={book._id}>
-                        <img src={`../../../../backend/src/uploads/resizes/${book.image}`} alt="Book" />
-                        <strong>Autor</strong>
-                        <p>{book.author}</p>
+                        <img src={`http://localhost:3333/backend/uploads/resizes/${book.image}`} alt="Book" />
+                        <div className="group-box">
+                            <strong>Autor:</strong>
+                            <p>{book.author}</p>
+                        </div>
 
-                        <strong>Nome do Livro</strong>
-                        <p>{book.nomeLivro}</p>
+                        <div className="group-box">
+                            <strong>Nome do Livro:</strong>
+                            <p>{book.nomeLivro}</p>
+                        </div>
 
-                        <strong>Editora</strong>
-                        <p>{book.editora}</p>
+                        <div className="group-box">
+                            <strong>Editora:</strong>
+                            <p>{book.editora}</p>
+                        </div>
 
-                        <strong>Páginas</strong>
-                        <p>{book.numeroPaginas}</p>
+                        <div className="group-box">
+                            <strong>Páginas:</strong>
+                            <p>{book.numeroPaginas}</p>
+                        </div>
 
-                        <strong>Páginas</strong>
-                        <p>{book.isbn}</p>
+                        <div className="group-box">
+                            <strong>Páginas:</strong>
+                            <p>{book.isbn}</p>
+                        </div>
+
                         <button onClick={() => handleDeleteBook(book._id)}>
                             <FiTrash2  size={20} color='#a8a8b3'></FiTrash2>
                         </button>

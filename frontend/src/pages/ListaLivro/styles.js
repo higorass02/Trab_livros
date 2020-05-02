@@ -64,6 +64,7 @@ export const Ul = styled.ul`
         padding: 24px;
         border-radius: 8px;
         position: relative;
+        text-align: center;
     }
 
     li button {
@@ -79,18 +80,26 @@ export const Ul = styled.ul`
     }
 
     li strong {
-        display: block;
-        margin-bottom: 16px;
+        display: inline-block;
+        margin-bottom: 05px;
         color: #eca400;
     }
 
     li p + strong {
-        margin-top: 32px;
+        margin-top: 5px;
     }
 
     li p {
         color: #fff;
         line-height: 21px;
         font-size: 16px;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    li img{
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
     }
 `;
