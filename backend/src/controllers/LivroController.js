@@ -3,6 +3,7 @@ const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
 
+
 module.exports = {
   // Lista os Livros do mais atual para o mais antigo
   async index(req, res) {
@@ -18,16 +19,23 @@ module.exports = {
     
     const { filename: image} = req.file
 
+    const data =  new Date();
+    const dados = data.toString().split(' ');
+
     const [name, ext] = image.split('.')
-    const fileName = `${name}.jpg`
+    const complemento = (''+dados[1]+'-'+dados[2]+'-'+dados[3]+'-'+dados[4]).replace(":", "-").replace(":", "-");
+    const fileName = `${name}`
 
     await sharp(req.file.path)
       .resize(500)
       .jpeg({ quality: 70})
       .toFile(
         path.resolve(req.file.destination, 
-          'resizes', fileName)
+          'resizes', fileName+'.jpg')
       )
+      
+    var novoNome = path.resolve(req.file.destination,'resizes', fileName)+complemento+'.jpg'
+    fs.renameSync(path.resolve(req.file.destination,'resizes', fileName+'.jpg'),novoNome)
 
     fs.unlinkSync(req.file.path)
 
@@ -37,7 +45,7 @@ module.exports = {
     livro.numeroPaginas = req.body.numeroPaginas;
     livro.editora = req.body.editora;
     livro.isbn = req.body.isbn;
-    livro.image = fileName;
+    livro.image = fileName+complemento+'.jpg';
 
     try{
       req.io.emit('livro', livro);
@@ -54,37 +62,63 @@ module.exports = {
   // Exclui o livro
   async destroy(req, res) {
     const { id } = req.params
+    
+    var livroDelete = await Livro.findById(id)
+    
+    try{
+      fs.unlinkSync('./uploads/resizes/'+livroDelete.image)
+    }catch(e){
+      // return res.json('arquivo nao encontrado!');
+      return res.json('./uploads/resizes/'+livroDelete.image);      
+    }
+
+    // return res.json(livroDelete);
+    
+
     var livro = await Livro.findOneAndDelete(id)
-    fs.unlinkSync('./uploads/resizes/'+livro.image)
+    
     return res.json('livro removido!');
   },
 
   // Altera o livro
   async update(req, res) {
-    
     const { filename: image} = req.file
 
+    const data =  new Date();
+    const dados = data.toString().split(' ');
+
     const [name, ext] = image.split('.')
-    const fileName = `${name}.jpg`
+    const complemento = (''+dados[1]+'-'+dados[2]+'-'+dados[3]+'-'+dados[4]).replace(":", "-").replace(":", "-");
+    const fileName = `${name}`
 
     await sharp(req.file.path)
       .resize(500)
       .jpeg({ quality: 70})
       .toFile(
         path.resolve(req.file.destination, 
-          'resizes', fileName)
+          'resizes', fileName+'.jpg')
       )
+      
+    var novoNome = path.resolve(req.file.destination,'resizes', fileName)+complemento+'.jpg'
+    fs.renameSync(path.resolve(req.file.destination,'resizes', fileName+'.jpg'),novoNome)
 
     fs.unlinkSync(req.file.path)
 
     const { id } = req.params
     var livroFind = await Livro.findById(id)
+
     livroFind.author = req.body.author;
     livroFind.nomeLivro = req.body.nomeLivro;
     livroFind.numeroPaginas = req.body.numeroPaginas;
     livroFind.editora = req.body.editora;
     livroFind.isbn = req.body.isbn;
-    livroFind.image = fileName;
+    
+    try{
+      fs.unlinkSync('./uploads/resizes/'+livroFind.image)
+      livroFind.image = fileName+complemento+'.jpg';
+    }catch(e){
+      return res.json('arquivo anterior nao encontrado!');
+    }
 
     try{
       req.io.emit('livro', livroFind);
