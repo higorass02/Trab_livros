@@ -19,6 +19,8 @@ export default function Livro() {
 
     async function handleRegister(e) {
         e.preventDefault();
+        const formData = new FormData();
+
         //Prevent default para o submit não recarregar a page
         //const data para pegar o objeto com o objetivo de envialo para a api
         const data = {
@@ -30,9 +32,11 @@ export default function Livro() {
             isbn,
         };
 
+        formData.append("data", data);
+
         try {
             console.log(data);
-            const response = await api.post("livros", data);
+            const response = await api.post("livros", formData);
 
             // alert(`Seu ID de acesso: ${response.data.id}`);
             // history.push("/"); //Envia o cliente de volta para a home
@@ -95,8 +99,8 @@ export default function Livro() {
                     <label>Livro</label>
                     <input
                         type='file'
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
+                        // value={image}
+                        onChange={(e) => setImage(e.target.files[0])}
                     />
                 </div>
                 <button type='submit' className='button'>

@@ -15,8 +15,10 @@ module.exports = {
 
     // gravar os livros
     async create(req, res) {
-        const filename = req.file;
-        console.log(filename);
+        const { image } = req.file;
+        console.log(image);
+
+        //res.status(200).json({ oi: "ola" });
 
         const data = new Date();
         const dados = data.toString().split(" ");
