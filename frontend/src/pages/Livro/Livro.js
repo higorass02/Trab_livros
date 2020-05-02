@@ -1,58 +1,60 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom"; //Link é uma outra forma de usar a tag 'a' porque a tag a faz com que a página faça o load inteiro na página
-// import { FiLogIn } from "react-icons/fi"; //E a forma de importar o ícone do feather-icons como component dentro do projeto. obs.: Formato svg
+import React, { useState } from "react"; //Puxando a React
+import api from "../../services/api"; //Puxando a Api
+import { Container } from "./styles"; //Puxando a Estilos
 
-import api from "../../services/api"; //Puxando a api
-
-import { Container } from "./styles";
-
+// Interface/Componente LivroCadastrar
 export default function Livro() {
-    //criação das propriedades e seus metodos seters
+
+    // criação das propriedades e seus metodos seters
     const [author, setAutor] = useState("");
     const [nomeLivro, setNomeLivro] = useState("");
     const [editora, setEditora] = useState("");
     const [numeroPaginas, setPag] = useState("");
     const [isbn, setIsbn] = useState("");
-    const [image, setImage] = useState("");
-
-    const history = useHistory();
-
+    const [image, setImage] = useState();
+    
     async function handleRegister(e) {
+        // metodo para executar o Submit
         e.preventDefault();
-        const formData = new FormData();
 
-        //Prevent default para o submit não recarregar a page
-        //const data para pegar o objeto com o objetivo de envialo para a api
-        const data = {
-            image,
-            author,
-            nomeLivro,
-            numeroPaginas,
-            editora,
-            isbn,
-        };
+        // objeto Livro para passar no post
+        const inputs = {
+                //'image':image,
+                'author':author,
+                'nomeLivro':nomeLivro,
+                'numeroPaginas':numeroPaginas,
+                'editora':editora,
+                'isbn':isbn,
+            };
 
-        formData.append("image", image);
-        formData.append("author", author);
-        formData.append("nomeLivro", nomeLivro);
-        formData.append("numeroPaginas", numeroPaginas);
-        formData.append("editora", editora);
-        formData.append("isbn", isbn);
+        //criacao do formData para encapsular os dados para o envio via post
+        const form_data = new FormData();
+
+        //inserindo a imagem no formData
+        form_data.append("image", image);
+
+        //inserindo atributos do Livro(formulario)
+        Object.entries(inputs).forEach(([key, value], index) => {
+            form_data.append(key, value);
+        });
 
         try {
-            console.log(data);
-            const response = await api.post("livros", formData);
+            // Chamada da API
+            api
+            .post("/livros", form_data).then(function (el) {
+                alert('Livro Cadastrado com Sucesso!')
+                // aqui deve entrar o redirecionamento para home
+            })
+            .catch(function (err) {
+                console.log('falha no cadastro do livro!')
+                console.log("Error: ", err);
+            });
 
-            // alert(`Seu ID de acesso: ${response.data.id}`);
-            // history.push("/"); //Envia o cliente de volta para a home
-            // console.log(data)
         } catch (err) {
             alert("Erro no cadastro.");
         }
     }
 
-    // }
-    // function Livro() {
     return (
         <Container className='container'>
             <h2>Book Collector</h2>
@@ -104,8 +106,10 @@ export default function Livro() {
                     <label>Livro</label>
                     <input
                         type='file'
+                        name='image'
+                        required
                         // value={image}
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => setImage(e.target.files[0])}                   
                     />
                 </div>
                 <button type='submit' className='button'>
@@ -115,5 +119,3 @@ export default function Livro() {
         </Container>
     );
 }
-
-// export default Livro;
