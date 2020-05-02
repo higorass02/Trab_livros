@@ -43,7 +43,7 @@ function ListaLivro() {
             <Ul>
                 {books.map((book) => (
                     <li key={book._id}>
-                        <img src={`http://localhost:3333/backend/uploads/resizes/${book.image}`} alt="Book" />
+                        <img src={`http://localhost:3333/files/${book.image}`} alt="Book" />
                         <div className="group-box">
                             <strong>Autor:</strong>
                             <p>{book.author}</p>
