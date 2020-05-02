@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 
 
-module.exports = {
+module.exports = { 
   // Lista os Livros do mais atual para o mais antigo
   async index(req, res) {
     const { page = 1 } = req.query;
@@ -69,7 +69,7 @@ module.exports = {
       fs.unlinkSync('./uploads/resizes/'+livroDelete.image)
     }catch(e){
       // return res.json('arquivo nao encontrado!');
-      return res.json('./uploads/resizes/'+livroDelete.image);      
+      // return res.json('./uploads/resiz+es/'+livroDelete.image);      
     }
 
     // return res.json(livroDelete);
