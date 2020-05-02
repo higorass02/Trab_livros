@@ -7,12 +7,11 @@ import api from "../../services/api"; //Puxando a api
 import { Container } from "./styles";
 
 export default function Livro() {
-    
     //criação das propriedades e seus metodos seters
-    const [autor, setAutor] = useState("");
+    const [author, setAutor] = useState("");
     const [nomeLivro, setNomeLivro] = useState("");
     const [editora, setEditora] = useState("");
-    const [paginas, setPag] = useState("");
+    const [numeroPaginas, setPag] = useState("");
     const [isbn, setIsbn] = useState("");
     const [image, setImage] = useState("");
 
@@ -23,15 +22,16 @@ export default function Livro() {
         //Prevent default para o submit não recarregar a page
         //const data para pegar o objeto com o objetivo de envialo para a api
         const data = {
-            autor,
+            author,
             nomeLivro,
-            paginas,
+            numeroPaginas,
             editora,
             isbn,
             image,
         };
 
         try {
+            console.log(data);
             const response = await api.post("livros", data);
 
             // alert(`Seu ID de acesso: ${response.data.id}`);
@@ -40,41 +40,64 @@ export default function Livro() {
         } catch (err) {
             alert("Erro no cadastro.");
         }
-
     }
 
-// }
-// function Livro() {
+    // }
+    // function Livro() {
     return (
         <Container className='container'>
             <h2>Book Collector</h2>
             <span>Insira as informações do livro</span>
-            <form onSubmit={handleRegister}>
+            <form encType='multipart/form-data' onSubmit={handleRegister}>
                 <div className='group-form'>
                     <label>Autor</label>
-                    <input type='text'value={autor} onChange={(e) => setAutor(e.target.value)}/>
+                    <input
+                        type='text'
+                        value={author}
+                        onChange={(e) => setAutor(e.target.value)}
+                    />
                 </div>
                 <div className='group-form'>
                     <label>Nome do livro</label>
-                    <input type='text' value={nomeLivro} onChange={(e) => setNomeLivro(e.target.value)}/>
+                    <input
+                        type='text'
+                        value={nomeLivro}
+                        onChange={(e) => setNomeLivro(e.target.value)}
+                    />
                 </div>
                 <div className='group-form-double'>
                     <div className='double-1'>
                         <label>Editora</label>
-                        <input type='text' value={editora} onChange={(e) => setEditora(e.target.value)}/>
+                        <input
+                            type='text'
+                            value={editora}
+                            onChange={(e) => setEditora(e.target.value)}
+                        />
                     </div>
                     <div className='double-2'>
                         <label>Páginas</label>
-                        <input type='text' value={paginas} onChange={(e) => setPag(e.target.value)}/>
+                        <input
+                            type='text'
+                            value={numeroPaginas}
+                            onChange={(e) => setPag(e.target.value)}
+                        />
                     </div>
                 </div>
                 <div className='group-form'>
                     <label>ISBN do livro</label>
-                    <input type='text'  value={isbn} onChange={(e) => setIsbn(e.target.value)}/>
+                    <input
+                        type='text'
+                        value={isbn}
+                        onChange={(e) => setIsbn(e.target.value)}
+                    />
                 </div>
                 <div className='group-form'>
                     <label>Livro</label>
-                    <input type='file'  value={image} onChange={(e) => setImage(e.target.value)}/>
+                    <input
+                        type='file'
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                    />
                 </div>
                 <button type='submit' className='button'>
                     Cadastrar livro
