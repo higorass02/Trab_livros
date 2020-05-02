@@ -15,63 +15,63 @@ module.exports = {
 
     // gravar os livros
     async create(req, res) {
-        const auishduia = req.body;
-        console.log(auishduia);
+        const filename = req.file;
+        console.log(filename);
 
-        // const data = new Date();
-        // const dados = data.toString().split(" ");
+        const data = new Date();
+        const dados = data.toString().split(" ");
 
-        // const [name, ext] = image.split(".");
-        // const complemento = (
-        //     "" +
-        //     dados[1] +
-        //     "-" +
-        //     dados[2] +
-        //     "-" +
-        //     dados[3] +
-        //     "-" +
-        //     dados[4]
-        // )
-        //     .replace(":", "-")
-        //     .replace(":", "-");
-        // const fileName = `${name}`;
+        const [name, ext] = image.split(".");
+        const complemento = (
+            "" +
+            dados[1] +
+            "-" +
+            dados[2] +
+            "-" +
+            dados[3] +
+            "-" +
+            dados[4]
+        )
+            .replace(":", "-")
+            .replace(":", "-");
+        const fileName = `${name}`;
 
-        // await sharp(req.file.path)
-        //     .resize(500)
-        //     .jpeg({ quality: 70 })
-        //     .toFile(
-        //         path.resolve(req.file.destination, "resizes", fileName + ".jpg")
-        //     );
+        await sharp(req.file.path)
+            .resize(500)
+            .jpeg({ quality: 70 })
+            .toFile(
+                path.resolve(req.file.destination, "resizes", fileName + ".jpg")
+            );
 
-        // var novoNome =
-        //     path.resolve(req.file.destination, "resizes", fileName) +
-        //     complemento +
-        //     ".jpg";
-        // fs.renameSync(
-        //     path.resolve(req.file.destination, "resizes", fileName + ".jpg"),
-        //     novoNome
-        // );
+        var novoNome =
+            path.resolve(req.file.destination, "resizes", fileName) +
+            complemento +
+            ".jpg";
+        fs.renameSync(
+            path.resolve(req.file.destination, "resizes", fileName + ".jpg"),
+            novoNome
+        );
 
-        // fs.unlinkSync(req.file.path);
+        fs.unlinkSync(req.file.path);
 
-        // var livro = new Livro();
-        // livro.author = req.body.author;
-        // livro.nomeLivro = req.body.nomeLivro;
-        // livro.numeroPaginas = req.body.numeroPaginas;
-        // livro.editora = req.body.editora;
-        // livro.isbn = req.body.isbn;
-        // livro.image = fileName + complemento + ".jpg";
+        var livro = new Livro();
+        livro.author = req.body.author;
+        livro.nomeLivro = req.body.nomeLivro;
+        livro.numeroPaginas = req.body.numeroPaginas;
+        livro.editora = req.body.editora;
+        livro.isbn = req.body.isbn;
+        livro.image = fileName + complemento + ".jpg";
 
-        // try {
-        //     req.io.emit("livro", livro);
-        //     const obj_livro = await Livro.create(livro);
+        try {
+            req.io.emit("livro", livro);
+            const obj_livro = await Livro.create(livro);
 
-        //     return res.json(livro);
-        // } catch (e) {
-        //     console.log(e);
+            return res.json(livro);
+        } catch (e) {
+            console.log(e);
 
-        //     return res.json(e);
-        // }
+            return res.json(e);
+        }
     },
 
     // Exclui o livro

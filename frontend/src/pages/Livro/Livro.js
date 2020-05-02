@@ -22,12 +22,12 @@ export default function Livro() {
         //Prevent default para o submit não recarregar a page
         //const data para pegar o objeto com o objetivo de envialo para a api
         const data = {
+            image,
             author,
             nomeLivro,
             numeroPaginas,
             editora,
             isbn,
-            image,
         };
 
         try {
