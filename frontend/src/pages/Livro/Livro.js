@@ -108,15 +108,19 @@ export default function Livro() {
                         onChange={(e) => setIsbn(e.target.value)}
                     />
                 </div>
-                <div className='group-form'>
+                <div className='group-form mb'>
                     <label>Livro</label>
-                    <input
+                    {/* <input
                         type='file'
                         name='image'
                         required
                         // value={image}
                         onChange={(e) => setImage(e.target.files[0])}                   
-                    />
+                    /> */}
+                </div>
+                <div class="upload-btn-wrapper">
+                    <button class="btn">Escolha um livro</button>
+                    <input type="file" name="myfile" onChange={(e) => setImage(e.target.files[0])} />
                 </div>
                 <button type='submit' className='button'>
                     Cadastrar livro

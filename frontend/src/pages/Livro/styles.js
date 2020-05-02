@@ -44,4 +44,33 @@ export const Container = styled.div`
         box-sizing: border-box;
         color: #fff;
     }
+
+    .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .btn {
+    border: 1px solid #eca400;
+    color: #eca400;
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    }
+
+    .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    }
+
+    .mb{
+        margin-bottom: 5px;
+    }
 `;
