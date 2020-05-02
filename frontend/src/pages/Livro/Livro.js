@@ -32,7 +32,12 @@ export default function Livro() {
             isbn,
         };
 
-        formData.append("data", data);
+        formData.append("image", image);
+        formData.append("author", author);
+        formData.append("nomeLivro", nomeLivro);
+        formData.append("numeroPaginas", numeroPaginas);
+        formData.append("editora", editora);
+        formData.append("isbn", isbn);
 
         try {
             console.log(data);
