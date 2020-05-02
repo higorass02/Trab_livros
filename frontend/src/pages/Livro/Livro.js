@@ -1,4 +1,5 @@
-import React, { useState } from "react"; //Puxando a React
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom"; //Puxando a React
 import api from "../../services/api"; //Puxando a Api
 import { Container } from "./styles"; //Puxando a Estilos
 
@@ -12,6 +13,8 @@ export default function Livro() {
     const [numeroPaginas, setPag] = useState("");
     const [isbn, setIsbn] = useState("");
     const [image, setImage] = useState();
+
+    const history = useHistory();
     
     async function handleRegister(e) {
         // metodo para executar o Submit
@@ -40,15 +43,18 @@ export default function Livro() {
 
         try {
             // Chamada da API
-            api
-            .post("/livros", form_data).then(function (el) {
-                alert('Livro Cadastrado com Sucesso!')
-                // aqui deve entrar o redirecionamento para home
-            })
-            .catch(function (err) {
-                console.log('falha no cadastro do livro!')
-                console.log("Error: ", err);
-            });
+            await api.post("/livros", form_data)
+            // .then(function (el) {
+            //     alert('Livro Cadastrado com Sucesso!')
+            //     // aqui deve entrar o redirecionamento para home
+            // })
+            // .catch(function (err) {
+            //     console.log('falha no cadastro do livro!')
+            //     console.log("Error: ", err);
+            // });
+
+            alert('Livro Cadastrado com Sucesso!');
+            history.push("/");
 
         } catch (err) {
             alert("Erro no cadastro.");
